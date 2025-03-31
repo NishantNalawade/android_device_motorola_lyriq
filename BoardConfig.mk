@@ -7,6 +7,8 @@
 
 DEVICE_PATH := device/motorola/lyriq
 
+include $(LOCAL_PATH)/AndroidProducts.mk
+
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
 
@@ -19,7 +21,7 @@ AB_OTA_PARTITIONS += \
     vbmeta_system \
     system_ext \
     product
-BOARD_USES_RECOVERY_AS_BOOT := true
+#BOARD_USES_RECOVERY_AS_BOOT := true
 
 # Architecture
 TARGET_ARCH := arm64
