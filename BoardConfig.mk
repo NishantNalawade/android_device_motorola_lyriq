@@ -7,7 +7,7 @@
 
 DEVICE_PATH := device/motorola/lyriq
 
-include $(LOCAL_PATH)/AndroidProducts.mk
+#include $(LOCAL_PATH)/AndroidProducts.mk
 
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
