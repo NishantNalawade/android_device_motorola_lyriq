@@ -7,7 +7,6 @@
 
 DEVICE_PATH := device/motorola/lyriq
 
-#include $(LOCAL_PATH)/AndroidProducts.mk
 
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
@@ -21,8 +20,16 @@ AB_OTA_PARTITIONS += \
     vbmeta_system \
     system_ext \
     product
-#BOARD_USES_RECOVERY_AS_BOOT := true
 
+TARGET_NO_RECOVERY := true
+BOARD_USES_RECOVERY_AS_BOOT := true
+
+# Fix for copying *.ko
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+
+TW_SCREEN_BLANK_ON_BOOT := true
+TW_Y_OFFSET := 100
+TW_H_OFFSET := -100
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
@@ -106,10 +113,33 @@ PLATFORM_SECURITY_PATCH := 2099-12-31
 VENDOR_SECURITY_PATCH := 2099-12-31
 PLATFORM_VERSION := 16.1.0
 
+# Debug
+TWRP_INCLUDE_LOGCAT := true
+TARGET_USES_LOGD    := true
+TW_INCLUDE_RESETPROP := true
+TW_LOAD_VENDOR_BOOT_MODULES := true
+TW_LOAD_VENDOR_MODULES := $(shell echo \"$(shell ls $(DEVICE_PATH)/recovery/root/vendor/lib/modules)\")
+
+
+
 # TWRP Configuration
+# # Screen
+TARGET_SCREEN_HEIGHT := 2400
+TARGET_SCREEN_WIDTH := 1080
 TW_THEME := portrait_hdpi
+TARGET_SCREEN_DENSITY := 400
+
+TW_FRAMERATE          := 60
+TW_BRIGHTNESS_PATH    := "/sys/class/leds/lcd-backlight/brightness"
+TW_MAX_BRIGHTNESS     := 2047
+TW_DEFAULT_BRIGHTNESS := 1200
+TW_NO_SCREEN_BLANK    := true
+
+TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TW_EXTRA_LANGUAGES := true
-TW_SCREEN_BLANK_ON_BOOT := true
+TW_NO_SCREEN_BLANK := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_USE_TOOLBOX := true
 TW_INCLUDE_REPACKTOOLS := true
+# Use our own USB config
+TW_EXCLUDE_DEFAULT_USB_INIT := true
